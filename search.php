@@ -1,13 +1,26 @@
 <?php
     require_once 'partials/head.php';
 
-    $search = !empty($_GET['q']) ? strip_tags($_GET['q']) : '';
+    echo debug($_GET);
 
-    if(!empty($search)){
-        $query = $db->prepare('SELECT * FROM products WHERE name LIKE :name OR description LIKE :description ORDER BY date DESC');
+    $search = !empty($_GET['q']) ? strip_tags($_GET['q']) : '';
+    $category = !empty($_GET['category']) ? intval($_GET['category']) : '';
+    $price = !empty($_GET['price']) ? strip_tags($_GET['price']) : '';
+
+	$price_separator_pos = strpos($price, ',');
+	$min_price = !empty($_GET['price']) ? substr($price, 0, $price_separator_pos) : 0;
+	$max_price = !empty($_GET['price']) ? substr($price, $price_separator_pos+1) : 100;
+
+    if(!empty($_GET)){
+    	$sql = 'SELECT * FROM products WHERE name LIKE :name OR description LIKE :description OR category = :category AND price > :min_price AND price < :max_price';
+
+        $query = $db->prepare($sql.' ORDER BY date DESC');
 
         $query->bindValue('description', '%'.$search.'%');
         $query->bindValue('name', '%'.$search.'%');
+        $query->bindValue('category', $category, PDO::PARAM_INT);
+        $query->bindValue('min_price', $min_price, PDO::PARAM_INT);
+        $query->bindValue('max_price', $max_price, PDO::PARAM_INT);
         $query->execute();
         $results = $query->fetchAll();
 
@@ -39,14 +52,22 @@
 
 				<form class="search form-inline" method="GET">
 					<div class="form-group">
+						<input type="hidden" name="q" value="<?= $search ?>">
+
+						<label for="category">Category</label>
 						<select id="category" name="category" class="form-control">
-							<option value="">Category</option>
+							<option value="" selected disabled>None</option>
+							<?php foreach($categories as $category_info){ 
+								$selected = $category == $category_info['id'] ? ' selected' : '';
+								?>
+								<option value="<?= $category_info['id'] ?>"<?= $selected ?>><?= ucfirst($category_info['name']) ?></option>
+							<?php } ?>
 						</select>
 					</div>
 
 					<div class="form-group">
 						<label for="price">Price</label>
-						0 € <input id="price" name="price" type="text" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[0,100]"/> 100 €
+						0 € <input id="price" name="price" type="text" value="<?= $min_price.','.$max_price ?>" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[0,100]"/> 100 €
 					</div>
 
 					<div class="form-group">

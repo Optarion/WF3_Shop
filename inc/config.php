@@ -1,18 +1,17 @@
 <?php
 
-$current_page = basename($_SERVER['PHP_SELF']);
+session_start();
+
+$site_name = 'Nibbler\'s Shop';
+
+$current_page = basename($_SERVER['REQUEST_URI']);
 
 $pages = array(
 	'about' => 'page.php',
 	'services' => 'page.php',
-	'contact' => 'form.php',
-	'register' => 'form.php' 
+	'contact' => 'contact.php?'
 );
 
-$categories = array(
-	'fruits',
-	'vegetables',
-	'beverages',
-	'high-tech',
-	'customizables'
-	);
+//Get products categories
+$query = $db->query('SELECT id, name FROM products_category');
+$categories = $query->fetchAll();  

@@ -9,11 +9,11 @@
     <div class="ratings">
         <p class="pull-right">15 reviews</p>
         <p>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
+            <?php for($i = 0; $i <= $product['rating']*5; $i++){ ?>
+                <span class="glyphicon glyphicon-star"></span>
+            <?php } ?>
+            
+
         </p>
     </div>
     <div class="btns clearfix">

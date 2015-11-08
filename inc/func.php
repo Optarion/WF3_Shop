@@ -18,3 +18,24 @@ function cutString($text, $max_length, $end = '[..]'){
 	}
 	return ucfirst($text);
 }
+
+/* SESSION */
+
+function logUser($user_info, $action){
+	$_SESSION['user_id'] = $user_info['id'];
+	$_SESSION['name'] = $user_info['name'];
+
+	$action = $action == 'register' ? 'Nous vous remercions de votre inscription' : 'Connexion réussie';
+
+	$result = $action.'. Vous allez être rediriger vers la page d\'accueil du site';
+    $result .= '<script>setTimeout(function() { location.href = "index.php"; }, 3000);</script>';
+
+	return $result;
+}
+
+function userIsLogged(){
+	if(!empty($_SESSION['user_id'])){
+		return true;
+	}
+	return false;
+}

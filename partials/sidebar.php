@@ -13,8 +13,8 @@
 <div class="col-md-3">
     <p class="lead">Categories</p>
     <div class="list-group">
-        <?php foreach($categories as $category_url => $category_label){ ?>
-            <a href="#" class="list-group-item"><?= ucfirst($category_label) ?></a>
+        <?php foreach($categories as $category){ ?>
+            <a href="search.php?q=<?= ucfirst($category['name']) ?>&category=<?= $category['id'] ?>" class="list-group-item"><?= ucfirst($category['name']) ?></a>
         <?php } ?>
         
     </div>
