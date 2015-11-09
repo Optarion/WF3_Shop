@@ -14,4 +14,4 @@ $pages = array(
 
 //Get products categories
 $query = $db->query('SELECT id, name FROM products_category');
-$categories = $query->fetchAll();  
+$categories = $query->fetchAll();

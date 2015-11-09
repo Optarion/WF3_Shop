@@ -12,12 +12,12 @@
             <?php for($i = 0; $i <= $product['rating']*5; $i++){ ?>
                 <span class="glyphicon glyphicon-star"></span>
             <?php } ?>
-            
+
 
         </p>
     </div>
     <div class="btns clearfix">
         <a class="btn btn-info pull-left" href="product.php?id=<?= $product['id'] ?>"><span class="glyphicon glyphicon-eye-open"></span> View</a>
-        <a class="btn btn-primary pull-right" href="product.html"><span class="glyphicon glyphicon-shopping-cart"></span> Add to cart</a>
+        <a class="btn btn-primary pull-right" href="add_product.php?product=<?= $product['id'] ?>"><span class="glyphicon glyphicon-shopping-cart"></span> Add to cart</a>
     </div>
 </div><!-- /.thumbnail -->

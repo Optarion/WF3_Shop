@@ -2,7 +2,9 @@
     require_once 'inc/db.php';
     require_once 'inc/config.php';
     require_once 'inc/func.php';
-  
+
+echo 'COOKIE'.debug($_COOKIE);
+
 ?>
 
 <!DOCTYPE html>
